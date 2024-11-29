@@ -1,0 +1,132 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Customer {
+  id                 String    @id @default(cuid())
+  firstName          String    @db.VarChar(100)
+  lastName           String    @db.VarChar(100)
+  branch             String    @db.VarChar(100)
+  customerAddress    String?   @db.Text
+  officeAddress      String?   @db.Text
+  phoneNo            String?   @unique @db.VarChar(100)
+  mobileNo           String?   @unique @db.VarChar(100)
+  dateOfBirth        DateTime? @db.Date
+  placeOfBirth       String?   @db.VarChar(100)
+  identificationType String?   @db.Char(36)
+  identificationNo   String?   @unique @db.VarChar(100)
+  religion           String?   @db.Char(36)
+  occupation         String?   @db.Char(36)
+  customerType       String?   @db.VarChar(50)
+  gender             String?   @db.VarChar(40)
+  email              String?   @unique @db.VarChar(50)
+  country            String?   @db.Char(5)
+  province           Int?
+  city               Int?
+  district           Int?
+  subDistrict        Int?
+  postalCode         String?   @db.Char(10)
+  rt                 String?   @db.Char(4)
+  rw                 String?   @db.Char(4)
+  simCardNo          String?   @db.VarChar(50)
+  marriedStatus      String?   @db.Char(3)
+  incomePerMonth     Decimal?  @db.Decimal(11, 0)
+  expensesPerMonth   Decimal?  @db.Decimal(11, 0)
+  hobby              String?   @db.VarChar(40)
+  favoriteFood       String?   @db.VarChar(40)
+  favoriteDrink      String?   @db.VarChar(40)
+  businessFields     String?   @db.VarChar(100)
+  registeredDate     DateTime? @db.Timestamp(6)
+  vehiclePhoneNo     String?   @unique @db.VarChar(100)
+  createdAt          DateTime? @default(now()) @db.Timestamp(6)
+  userCreated        Int?
+  updatedAt          DateTime? @updatedAt @db.Timestamp(6)
+  userUpdate         Int?
+  deletedAt          DateTime? @db.Timestamp(6)
+
+  vehicleUnits VehicleUnit[] // A customer can have multiple vehicle units
+
+  @@index([identificationType])
+  @@index([religion])
+  @@index([occupation])
+  @@map("customers") // Maps the model to the 'customers' table
+}
+
+model VehicleUnit {
+  id                        String    @id @default(cuid())
+  rrn                       String?   @db.VarChar(100)
+  vinCode                   String?   @db.VarChar(100)
+  vehicleRegistrationNumber String?   @unique @db.VarChar(100)
+  registrationDate          DateTime? @db.Timestamp(6)
+  registrationExpiryDate    DateTime? @db.Timestamp(6)
+  engineSerialNo            String?   @unique @db.VarChar(100)
+  frameSerialNo             String?   @unique @db.VarChar(100)
+  vehicleModel              String?   @db.Char(36)
+  color                     String?   @db.Char(36)
+  licensePlateNumber        String?   @db.VarChar(100)
+  vehicleDeliveryDate       DateTime? @db.Timestamp(6)
+  applicationForInvoiceDate DateTime? @db.Timestamp(6)
+  productionYear            Int?
+  dailyAverageMileage       Int?
+  lastMileageRecord         Int?
+  lastServiceDate           DateTime? @db.Timestamp(6)
+  expectedNextServiceDate   DateTime? @db.Timestamp(6)
+  nextServiceMileage        Int?
+  nextService               String?   @db.Char(36)
+  customerId                String    @db.Char(36) // Foreign key referencing Customer
+  customer                  Customer  @relation(fields: [customerId], references: [id]) // Relationship back to Customer
+  createdAt                 DateTime? @default(now()) @db.Timestamp(6)
+  userCreated               Int?
+  updatedAt                 DateTime? @updatedAt @db.Timestamp(6)
+  userUpdate                Int?
+  deletedAt                 DateTime? @db.Timestamp(6)
+  insuranceExpireDate       DateTime? @db.Timestamp(6)
+  paymentMethod             String?   @db.Char(50)
+
+  @@index([customerId])
+  @@index([frameSerialNo])
+  @@map("vehicle_units") // Maps the model to the 'vehicle_units' table
+}
+
+model VehicleBrand {
+  id   String @id @default(cuid())
+  name String
+
+  models VehicleModel[] // Prisma
+
+  @@map("vehicle_brands")
+}
+
+model VehicleModel {
+  id      String        @id @default(cuid())
+  name    String
+  brandId String
+  brand   VehicleBrand  @relation(fields: [brandId], references: [id]) // Prisma
+  types   VehicleType[]
+
+  @@map("vehicle_models")
+}
+
+model VehicleType {
+  id      String         @id @default(cuid())
+  name    String
+  modelId String
+  model   VehicleModel   @relation(fields: [modelId], references: [id]) // Prisma
+  colors  VehicleColor[]
+
+  @@map("vehicle_types")
+}
+
+model VehicleColor {
+  id     String       @id @default(cuid())
+  name   String
+  type   VehicleType? @relation(fields: [typeId], references: [id])
+  typeId String?
+
+  @@map("vehicle_colors")
+}

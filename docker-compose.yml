@@ -1,0 +1,20 @@
+services:
+  backend:
+    image: vehicle-backend
+    build:
+      context: .
+    ports:
+      - "3000:3000"
+    depends_on:
+      - database
+    env_file:
+      - .env
+
+  database:
+    image: postgres:alpine
+    ports:
+      - "5432:5432"
+    restart: always
+    env_file:
+      - path: .env
+        required: true
