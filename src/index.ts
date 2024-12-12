@@ -1,9 +1,22 @@
 import { Hono } from "hono";
+import { cors } from "hono/cors";
 
 import { router } from "./routes";
 
 // Initialize the Hono app
 const app = new Hono();
+
+// Configure CORS options
+const corsOptions = {
+  origin: '*', // Allow frontend's origin
+  allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allowed methods
+  allowHeaders: ['Content-Type', 'Authorization'], // Allowed headers
+  exposedHeaders: ['Content-Length', 'X-Kuma-Revision'], // Any headers you'd like to expose
+  credentials: true, // If you are using cookies
+};
+
+// Use the CORS middleware for all routes
+app.use(cors(corsOptions));
 
 // Mount routes
 app.get("/", (c) => c.json({ message: "Vehicle Workshop API", api: "/api" }));
