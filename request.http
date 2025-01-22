@@ -1,0 +1,21 @@
+# 1. Install REST Client dari VSCode Extensions
+# 2. Buat file baru: requests.http atau requests.rest
+# 3. Tulis request seperti ini:
+
+### Generate Report
+POST http://localhost:3000/api/reports/workorders
+Content-Type: application/json
+
+{
+    "startDate": "2023-01-01",
+    "endDate": "2023-12-31"
+}
+
+### Check Status
+GET http://localhost:3000/api/reports/jobs/{{jobId}}/status
+
+### Download Report
+GET http://localhost:3000/api/reports/jobs/{{jobId}}/download
+
+### List All Jobs
+GET http://localhost:3000/api/reports/jobs?page=1&limit=10

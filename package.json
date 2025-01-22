@@ -1,0 +1,22 @@
+{
+  "name": "report-project",
+  "module": "src/index.ts",
+  "type": "module",
+  "scripts": {
+    "dev": "bun run --watch src/index.ts",
+    "start": "bun run src/index.ts"
+  },
+  "dependencies": {
+    "@prisma/client": "latest",
+    "csv-writer": "latest",
+    "dotenv": "latest",
+    "hono": "latest",
+    "winston": "latest"
+  },
+  "devDependencies": {
+    "@types/node": "latest",
+    "bun-types": "latest",
+    "prisma": "latest",
+    "typescript": "latest"
+  }
+}

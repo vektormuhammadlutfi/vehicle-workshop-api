@@ -1,0 +1,25 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "mysql"
+    url      = env("DATABASE_URL")
+}
+
+model CsvJobs {
+    id           String   @id
+    status       String
+    params       String   @db.Text
+    fileName     String   @db.VarChar(255)
+    filePath     String   @db.Text
+    fileSize     BigInt?
+    error        String?  @db.Text
+    user_created Int
+    created_at   DateTime @default(now())
+    updated_at   DateTime @updatedAt
+
+    @@index([user_created])
+    @@index([created_at])
+    @@map("csv_jobs")
+}
