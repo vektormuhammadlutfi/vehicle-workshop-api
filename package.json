@@ -1,5 +1,5 @@
 {
-  "name": "report-project",
+  "name": "vehicle-workshop-api",
   "module": "src/index.ts",
   "type": "module",
   "scripts": {
@@ -7,16 +7,15 @@
     "start": "bun run src/index.ts"
   },
   "dependencies": {
-    "@prisma/client": "latest",
-    "csv-writer": "latest",
-    "dotenv": "latest",
-    "hono": "latest",
-    "winston": "latest"
+    "@prisma/client": "^6.2.1",
+    "csv-writer": "^1.6.0",
+    "dotenv": "^16.4.7",
+    "hono": "^4.6.18",
+    "winston": "^3.17.0"
   },
   "devDependencies": {
-    "@types/node": "latest",
-    "bun-types": "latest",
-    "prisma": "latest",
-    "typescript": "latest"
+    "@types/node": "^22.10.10",
+    "prisma": "^6.2.1",
+    "typescript": "^5.7.3"
   }
 }

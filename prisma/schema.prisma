@@ -1,25 +1,37 @@
 generator client {
-    provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["relationJoins"]
 }
+
+// TODO: Generator ZOd
 
 datasource db {
-    provider = "mysql"
-    url      = env("DATABASE_URL")
+  provider = "mysql"
+  url      = env("DATABASE_URL")
 }
 
+// https://www.prisma.io/blog/prisma-orm-now-lets-you-choose-the-best-join-strategy-preview
+
+// TODO: CONVENTION
+// model JobReport
+// model ReportJob
+// model Vehicle
+// ...
 model CsvJobs {
-    id           String   @id
-    status       String
-    params       String   @db.Text
-    fileName     String   @db.VarChar(255)
-    filePath     String   @db.Text
-    fileSize     BigInt?
-    error        String?  @db.Text
-    user_created Int
-    created_at   DateTime @default(now())
-    updated_at   DateTime @updatedAt
+  id           String   @id @default(uuid())
+  status       String // pending, processing, completed, failed
+  params       String   @db.Text // by_date , by_range , by_user
+  fileName     String   @db.VarChar(255) // report_2025-01-01_2025-12-31.csv
+  filePath     String   @db.Text // path/to/report.csv
+  fileSize     BigInt? // 100 MB
+  error        String?  @db.Text
+  user_created Int // user_id
+  created_at   DateTime @default(now())
+  updated_at   DateTime @default(now()) @updatedAt
 
-    @@index([user_created])
-    @@index([created_at])
-    @@map("csv_jobs")
+  @@index([user_created])
+  @@index([created_at])
+  @@map("csv_jobs")
 }
+
+// TODO: Other models via Prisma Introspection

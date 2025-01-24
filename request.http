@@ -3,7 +3,7 @@
 # 3. Tulis request seperti ini:
 
 ### Generate Report
-POST http://localhost:3000/api/reports/workorders
+POST http://localhost:3000/api/reports/work-orders
 Content-Type: application/json
 
 {
@@ -12,10 +12,10 @@ Content-Type: application/json
 }
 
 ### Check Status
-GET http://localhost:3000/api/reports/jobs/{{jobId}}/status
+GET http://localhost:3000/api/jobs/{{jobId}}/status
 
 ### Download Report
-GET http://localhost:3000/api/reports/jobs/{{jobId}}/download
+GET http://localhost:3000/api/jobs/{{jobId}}/download
 
 ### List All Jobs
-GET http://localhost:3000/api/reports/jobs?page=1&limit=10
+GET http://localhost:3000/api/jobs?page=1&limit=10
