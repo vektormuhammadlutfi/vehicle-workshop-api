@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  database:
+    image: mysql:8.0-oracle
+    ports:
+      - "3307:3306"
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:
+    driver: local

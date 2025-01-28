@@ -3,35 +3,967 @@ generator client {
   previewFeatures = ["relationJoins"]
 }
 
-// TODO: Generator ZOd
-
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
-// https://www.prisma.io/blog/prisma-orm-now-lets-you-choose-the-best-join-strategy-preview
+model common_branch {
+  BranchId                                 String    @id @db.VarChar(100)
+  BranchName                               String?   @db.VarChar(100)
+  ShortBranchName2                         Int?
+  BranchType                               Int?
+  LocationStatus                           Int?
+  BranchAddress                            String?   @db.Text
+  PhoneNo                                  String?   @db.VarChar(100)
+  PhoneNoSMSGateway                        String?   @db.VarChar(100)
+  Email                                    String?   @db.VarChar(100)
+  RootBranch                               String?   @db.VarChar(100)
+  IsSPLD                                   Int?      @db.TinyInt
+  ReceptionLeadTime                        Float?
+  ServiceLeadTime                          Float?
+  PartPickingLeadTime                      Float?
+  FinalInspectionLeadTime                  Float?
+  DocumentCheckingLeadTime                 Float?
+  InvoicingLeadTime                        Float?
+  CallCustomerNotificationLeadTime         Float?
+  WashingLeadTime                          Float?
+  DeliveryLeadTime                         Float?
+  ClockOnLeadTime                          Float?
+  ClockOffLeadTime                         Float?
+  DADDataRange                             Int?
+  DeadStock                                Int?
+  DemandFrequency                          Int?
+  DemandDuration                           Int?
+  StockPolicyPriceLimit                    Decimal?  @db.Decimal(19, 0)
+  ReturnDaysLimit                          Int?
+  ReturnPriceLimit                         Decimal?  @db.Decimal(19, 0)
+  BinningLimitDays                         Int?
+  Region                                   String?   @db.VarChar(100)
+  TaxCodeOnSales                           String?   @db.Char(36)
+  TaxCodeOnPurchase                        String?   @db.Char(36)
+  WithHoldingTaxCode                       String?   @db.Char(36)
+  IsRootBranch                             Int?      @db.TinyInt
+  DefaultPettyCashAccount                  String?   @db.Char(36)
+  CashierStartingAmount                    Decimal?  @db.Decimal(19, 0)
+  CashierBalanceClear                      Int?      @db.TinyInt
+  DeadlinePeriodicService                  Int?
+  MaximumReturnDownPayment                 Float?
+  ParentBranch                             String?   @db.VarChar(100)
+  OptimisticLockField                      Int?
+  GCRecord                                 Int?
+  DeliveryCode                             String?   @db.VarChar(5)
+  PartInTransitAccount                     String?   @db.Char(36)
+  ShortBranchNameDataTransfer              String?   @db.VarChar(4)
+  ShortBranchNameDataTransferOracle        String?   @db.VarChar(4)
+  ShortBranchName                          String?   @db.VarChar(4)
+  ToyotaBranchCode                         String?   @db.VarChar(100)
+  ToyotaBranchCodeAFI                      String?   @db.VarChar(100)
+  ToyotaAuthorized                         Int?      @db.TinyInt
+  ParentToyotaBranchCode                   String?   @db.VarChar(100)
+  PrincipalAuthorized                      Int?      @db.TinyInt
+  PrincipalBranchCode                      String?   @db.VarChar(100)
+  ParentPrincipalBranchCode                String?   @db.VarChar(100)
+  DefaultLocation                          String?   @db.Char(36)
+  DefaultIntransitLocation                 String?   @db.Char(36)
+  OrganizationalUnitTypeForTransferRequest Int?
+  Province                                 String?   @db.VarChar(50)
+  City                                     String?   @db.VarChar(50)
+  MatriksDR                                Int?
+  OutlateCode                              String?   @db.VarChar(10)
+  Counters                                 Int?      @db.TinyInt
+  InitialBranch                            String?   @db.Char(4)
+  created_at                               DateTime? @db.DateTime(0)
+  user_created                             Int?
+  updated_at                               DateTime? @db.DateTime(0)
+  user_update                              Int?
+  deleted_at                               DateTime? @db.DateTime(0)
 
-// TODO: CONVENTION
-// model JobReport
-// model ReportJob
-// model Vehicle
-// ...
-model CsvJobs {
-  id           String   @id @default(uuid())
-  status       String // pending, processing, completed, failed
-  params       String   @db.Text // by_date , by_range , by_user
-  fileName     String   @db.VarChar(255) // report_2025-01-01_2025-12-31.csv
-  filePath     String   @db.Text // path/to/report.csv
-  fileSize     BigInt? // 100 MB
-  error        String?  @db.Text
-  user_created Int // user_id
-  created_at   DateTime @default(now())
-  updated_at   DateTime @default(now()) @updatedAt
-
-  @@index([user_created])
-  @@index([created_at])
-  @@map("csv_jobs")
+  @@index([BranchId], map: "BranchId")
+  @@index([DefaultIntransitLocation], map: "DefaultIntransitLocation")
+  @@index([DefaultLocation], map: "DefaultLocation")
+  @@index([DefaultPettyCashAccount], map: "DefaultPettyCashAccount")
+  @@index([DeliveryCode], map: "DeliveryCode")
+  @@index([GCRecord], map: "GCRecord")
+  @@index([ParentBranch], map: "ParentBranch")
+  @@index([PartInTransitAccount], map: "PartInTransitAccount")
+  @@index([Region], map: "Region")
+  @@index([ShortBranchName2], map: "ShortBranchName2")
+  @@index([TaxCodeOnPurchase], map: "TaxCodeOnPurchase")
+  @@index([TaxCodeOnSales], map: "TaxCodeOnSales")
+  @@index([WithHoldingTaxCode], map: "WithHoldingTaxCode")
 }
 
-// TODO: Other models via Prisma Introspection
+model common_contactperson {
+  Oid                 String    @id @db.Char(36)
+  ContactPersonName   String?   @db.VarChar(100)
+  MobileNo            String?   @db.VarChar(100)
+  Email               String?   @db.VarChar(100)
+  Relationship        String?   @db.VarChar(100)
+  DefaultContact      Int?      @db.TinyInt
+  VehicleUnit         String?   @db.Char(36)
+  OptimisticLockField Int?
+  GCRecord            Int?
+  created_at          DateTime? @db.DateTime(0)
+  user_created        Int?
+  updated_at          DateTime? @db.DateTime(0)
+  user_update         Int?
+  deleted_at          DateTime? @db.DateTime(0)
+
+  @@index([Oid], map: "Oid")
+  @@index([VehicleUnit], map: "VehicleUnit")
+}
+
+model common_customer {
+  Oid                 String    @id @db.Char(36)
+  Salutation          String?   @db.Char(36)
+  FirstName           String?   @db.VarChar(100)
+  LastName            String?   @db.VarChar(100)
+  CustomerId          String?   @db.VarChar(100)
+  TaxRegistrationNo   String?   @db.VarChar(100)
+  Branch              String?   @db.VarChar(100)
+  CustomerAddress     String?   @db.Text
+  OfficeAddress       String?   @db.Text
+  PhoneNo             String?   @db.VarChar(100)
+  MobileNo            String?   @db.VarChar(100)
+  DateOfBirth         DateTime? @db.Date
+  PlaceOfBirth        String?   @db.VarChar(100)
+  IdentificationType  String?   @db.Char(36)
+  IdentificationNo    String?   @unique(map: "IdentificationNo") @db.VarChar(100)
+  Religion            String?   @db.Char(36)
+  ContactSource       String?   @db.Char(36)
+  Occupation          String?   @db.Char(36)
+  CustomerType        String?   @db.VarChar(50)
+  Gender              String?   @db.VarChar(40)
+  RetailFleet         String?
+  Email               String?   @db.VarChar(50)
+  Country             String?   @db.Char(5)
+  Province            Int?
+  City                Int?
+  District            Int?
+  SubDistrict         Int?
+  PostalCode          String?   @db.Char(10)
+  RT                  String?   @db.Char(4)
+  RW                  String?   @db.Char(4)
+  SIMCardNo           String?   @db.VarChar(50)
+  MarriedStatus       String?   @db.Char(3)
+  IncomePerMonth      Decimal?  @db.Decimal(11, 0)
+  ExpensesPerMonth    Decimal?  @db.Decimal(11, 0)
+  Hobby               String?   @db.VarChar(40)
+  Referensi           String?   @db.VarChar(100)
+  FavoriteFood        String?   @db.VarChar(40)
+  FavoriteDrink       String?   @db.VarChar(40)
+  BusinessFields      String?   @db.VarChar(100)
+  RegisteredDate      DateTime? @db.DateTime(0)
+  VehiclePhoneNo      String?   @db.VarChar(100)
+  VehicleRelationship String?   @db.VarChar(100)
+  VehicleUsers        String?   @db.VarChar(100)
+  VATEnabled          Boolean?
+  InActive            Boolean?
+  ReasonActivation    String?   @db.VarChar(255)
+  AppInActive         Int?      @db.TinyInt
+  GCRecord            String?   @db.VarChar(11)
+  created_at          DateTime? @db.DateTime(0)
+  user_created        Int?
+  updated_at          DateTime? @db.DateTime(0)
+  user_update         Int?
+  deleted_at          DateTime? @db.DateTime(0)
+
+  @@index([Branch], map: "Branch")
+  @@index([ContactSource], map: "ContactSource")
+  @@index([IdentificationType], map: "IdentificationType")
+  @@index([Occupation], map: "Occupation")
+  @@index([Oid], map: "Oid")
+  @@index([Religion], map: "Religion")
+  @@index([Salutation], map: "Salutation")
+}
+
+model common_dealer {
+  Oid                 String    @id @db.Char(36)
+  DealerName          String?   @db.VarChar(100)
+  DealerType          Int?      @db.TinyInt
+  Branch              String?   @db.VarChar(20)
+  OptimisticLockField Int?
+  GCRecord            Int?
+  created_at          DateTime? @db.DateTime(0)
+  user_created        Int?
+  updated_at          DateTime? @db.DateTime(0)
+  user_update         Int?
+  deleted_at          DateTime? @db.DateTime(0)
+
+  @@index([Oid], map: "Oid")
+}
+
+model csv_jobs {
+  id           String    @id @db.VarChar(100)
+  status       String    @db.VarChar(20)
+  params       String    @db.Text
+  fileName     String    @db.VarChar(255)
+  filePath     String    @db.Text
+  fileSize     BigInt?
+  error        String?   @db.Text
+  user_created Int
+  created_at   DateTime  @default(now()) @db.DateTime(0)
+  updated_at   DateTime  @default(now()) @db.DateTime(0)
+  deleted_at   DateTime? @db.DateTime(0)
+
+  @@index([created_at], map: "idx_created_at")
+  @@index([deleted_at], map: "idx_deleted_at")
+  @@index([user_created], map: "idx_user_created")
+}
+
+model sales_vehiclebrand {
+  Oid          String    @id @db.Char(36)
+  BrandName    String?   @db.VarChar(100)
+  GCRecord     Int?
+  created_at   DateTime? @db.DateTime(0)
+  user_created Int?
+  updated_at   DateTime? @db.DateTime(0)
+  user_update  Int?
+  deleted_at   DateTime? @db.DateTime(0)
+
+  @@index([Oid], map: "Oid")
+}
+
+model sales_vehiclecolor {
+  Oid          String    @id @db.Char(36)
+  ColorCode    String?   @db.VarChar(100)
+  Description  String?   @db.VarChar(100)
+  ColorNameEn  String?   @db.VarChar(100)
+  ColorNameId  String?   @db.VarChar(100)
+  GCRecord     Int?
+  created_at   DateTime? @db.DateTime(0)
+  user_created Int?
+  updated_at   DateTime? @db.DateTime(0)
+  user_update  Int?
+  deleted_at   DateTime? @db.DateTime(0)
+
+  @@index([ColorCode], map: "ColorCode")
+  @@index([ColorNameId], map: "ColorNameId")
+  @@index([Oid], map: "Oid")
+}
+
+model sales_vehiclefullmodel {
+  VehicleFullModelId      String    @id @db.Char(36)
+  ToyotaFullModelId       String?   @db.VarChar(100)
+  FullModelId             String?   @db.VarChar(100)
+  VehicleFullModelName    String?   @db.VarChar(100)
+  VehicleModel            String?   @db.Char(36)
+  ReleasedYear            DateTime? @db.DateTime(0)
+  FuelType                String?   @db.Char(36)
+  isDifferentPriceByColor Int?      @db.TinyInt
+  CylinderVolume          String?   @db.Char(36)
+  Discontinue             Int?      @db.TinyInt
+  Brand                   String?   @db.Char(36)
+  GCRecord                Int?
+  created_at              DateTime? @db.DateTime(0)
+  user_created            Int?
+  updated_at              DateTime? @db.DateTime(0)
+  user_update             Int?
+  deleted_at              DateTime? @db.DateTime(0)
+
+  @@index([ToyotaFullModelId], map: "ToyotaFullModelId")
+  @@index([ToyotaFullModelId], map: "ToyotaFullModelId_2")
+  @@index([VehicleFullModelId], map: "VehicleFullModelId")
+  @@index([VehicleModel], map: "VehicleModel")
+}
+
+model sales_vehiclemodel {
+  Oid               String    @id @db.Char(36)
+  VehicleModelName  String?   @unique(map: "VehicleModelName") @db.VarChar(100)
+  Photo             String?   @db.VarChar(100)
+  SalesPoint        Float?
+  Brand             String?   @db.Char(36)
+  Design            String?   @db.VarChar(50)
+  Category          String?   @db.VarChar(50)
+  Sub_Category      String?   @db.VarChar(50)
+  Price             String?   @db.VarChar(50)
+  Sub_Price         String?   @db.VarChar(50)
+  Discontinue       Boolean?
+  GCRecord          Int?
+  VehicleGroupModel String?   @db.Char(36)
+  created_at        DateTime? @db.DateTime(0)
+  user_created      Int?
+  updated_at        DateTime? @db.DateTime(0)
+  user_update       Int?
+  deleted_at        DateTime? @db.DateTime(0)
+
+  @@index([Oid], map: "Oid")
+}
+
+model sales_vehicleunit {
+  ActiveServiceBooking        String?   @db.Char(36)
+  DefaultContact              String?   @db.Char(36)
+  Oid                         String    @id @db.Char(36)
+  RRN                         String?   @db.VarChar(100)
+  VinCode                     String?   @db.VarChar(100)
+  VehicleRegistrationNumber   String?   @db.VarChar(100)
+  RegistrationDate            DateTime? @db.DateTime(0)
+  RegistrationExpiryDate      DateTime? @db.DateTime(0)
+  EngineSerialNo              String?   @db.VarChar(100)
+  FrameSerialNo               String?   @db.VarChar(100)
+  WMI                         String?   @db.Char(5)
+  VDS                         String?   @db.Char(10)
+  CD                          String?   @db.Char(5)
+  VIS                         String?   @db.Char(20)
+  VehicleModel                String?   @db.Char(36)
+  VehicleFullModel            String?   @db.Char(36)
+  Color                       String?   @db.Char(36)
+  LicensePlateNumber          String?   @db.VarChar(100)
+  VehicleDeliveryDate         DateTime? @db.DateTime(0)
+  ApplicationForInvoiceDate   DateTime? @db.DateTime(0)
+  ProductionYear              Int?
+  TWC                         DateTime? @db.DateTime(0)
+  DailyAverageMileage         Int?
+  LastMileageRecord           Int?
+  LastServiceDate             DateTime? @db.DateTime(0)
+  ExpectedNextServiceDate     DateTime? @db.DateTime(0)
+  NextServiceMileage          Int?
+  NextService                 String?   @db.Char(36)
+  RegistrationType            Int?
+  FieldAction                 Int?      @db.TinyInt
+  FieldActionName             String?   @db.Char(36)
+  PassiveCustomer             Int?      @db.TinyInt
+  Blacklisted                 Int?      @db.TinyInt
+  Branch                      String?   @db.VarChar(100)
+  VehicleNo                   String?   @db.VarChar(100)
+  KeyNo                       String?   @db.VarChar(100)
+  Dealer                      String?   @db.Char(36)
+  VehicleProduct              String?   @db.Char(36)
+  Customer                    String?   @db.Char(36)
+  Partner                     String?   @db.Char(36)
+  Leasing                     String?   @db.Char(36)
+  SalesRemark                 String?   @db.LongText
+  SalesName                   String?   @db.VarChar(100)
+  TestDriveUnitStock          String?   @db.Char(36)
+  VehicleOrder                String?   @db.Char(36)
+  Route                       String?   @db.Char(36)
+  LatestLocation              String?   @db.Char(36)
+  Insurance                   String?   @db.Char(36)
+  InsuranceType               String?   @db.Char(36)
+  RateInsurance               Int?
+  InsuranceValue              Decimal?  @db.Decimal(19, 0)
+  Tenor                       Int?
+  TenorType                   String?   @db.Char(5)
+  ExpectedNextServiceByMilage Int?
+  PeriodicServiceDeadline     DateTime? @db.DateTime(0)
+  CalculatedService           DateTime? @db.DateTime(0)
+  OptimisticLockField         Int?
+  GCRecord                    Int?
+  ServiceRemark               String?   @db.LongText
+  PolisNo                     String?   @db.VarChar(100)
+  Queue                       String?   @db.VarChar(36)
+  created_at                  DateTime? @db.DateTime(0)
+  user_created                Int?
+  updated_at                  DateTime? @db.DateTime(0)
+  user_update                 Int?
+  deleted_at                  DateTime? @db.DateTime(0)
+  InsuranceExpireDate         DateTime? @db.DateTime(0)
+  PaymentMethod               String?   @db.Char(50)
+
+  @@index([ActiveServiceBooking], map: "ActiveServiceBooking")
+  @@index([Branch], map: "Branch")
+  @@index([Customer], map: "Customer")
+  @@index([Dealer], map: "Dealer")
+  @@index([DefaultContact], map: "DefaultContact")
+  @@index([FieldActionName], map: "FieldActionName")
+  @@index([FrameSerialNo], map: "FrameSerialNo")
+  @@index([GCRecord], map: "GCRecord")
+  @@index([Insurance], map: "Insurance")
+  @@index([LatestLocation], map: "LatestLocation")
+  @@index([Leasing], map: "Leasing")
+  @@index([NextService], map: "NextService")
+  @@index([Oid], map: "Oid")
+  @@index([Partner], map: "Partner")
+  @@index([Route], map: "Route")
+  @@index([TestDriveUnitStock], map: "TestDriveUnitStock")
+  @@index([VehicleOrder], map: "VehicleOrder")
+  @@index([VehicleProduct], map: "VehicleProduct")
+}
+
+model service_insurance {
+  Oid                 String    @id @db.Char(36)
+  InsuranceName       String?   @db.VarChar(100)
+  NPWP                String?   @db.VarChar(100)
+  PhoneNo             String?   @db.VarChar(100)
+  Email               String?   @db.VarChar(100)
+  Address             String?   @db.VarChar(255)
+  CreditLimit         Decimal?  @db.Decimal(19, 0)
+  CreditAmount        Decimal?  @db.Decimal(19, 0)
+  ContactPersonName   String?   @db.Char(36)
+  ContactPersonPhone  String?   @db.Char(15)
+  DiscountForInsurer  Float?
+  ReceivableAccount   String?   @db.Char(36)
+  OptimisticLockField Int?
+  GCRecord            Int?
+  created_at          DateTime? @db.DateTime(0)
+  user_created        Int?
+  updated_at          DateTime? @db.DateTime(0)
+  user_update         Int?
+  deleted_at          DateTime? @db.DateTime(0)
+  TermOfPayment       Int?
+
+  @@index([Oid], map: "Oid")
+}
+
+model service_invoice {
+  Oid                 String    @id @db.Char(36)
+  Invoice             String?   @db.VarChar(5)
+  InvoiceNo           String?   @db.VarChar(50)
+  InvoiceNoSoa        String?   @db.VarChar(50)
+  BilledTo            String?   @db.Char(36)
+  InvoiceDate         DateTime? @db.DateTime(0)
+  Branch              String?   @db.VarChar(100)
+  TaxRegistrationNo   String?   @db.VarChar(100)
+  WorkOrder           String?   @db.Char(36)
+  TermOfPayment       Int?
+  BillingStaff        String?   @db.Char(36)
+  TotalJob            Decimal?  @db.Decimal(19, 0)
+  TotalPart           Decimal?  @db.Decimal(19, 0)
+  Stamp               String?   @db.Char(36)
+  Tax                 Decimal?  @db.Decimal(19, 0)
+  InvoiceAmount       Decimal?  @db.Decimal(19, 0)
+  InvoiceAmountReport Decimal?  @default(0) @db.Decimal(19, 0)
+  TotalPayment        Decimal?  @default(0) @db.Decimal(19, 0)
+  InvoiceStatus       Boolean?  @default(true)
+  IncludeDutyStamp    Int?      @db.TinyInt
+  Sequence            BigInt?
+  IsPosted            Int?      @db.TinyInt
+  Remark              String?   @db.Text
+  CNDate              DateTime? @db.DateTime(0)
+  ClaimNumber         String?   @db.VarChar(50)
+  OptimisticLockField Int?
+  GCRecord            Int?
+  created_at          DateTime? @db.DateTime(0)
+  user_created        Int?
+  updated_at          DateTime? @db.DateTime(0)
+  user_update         Int?
+  deleted_at          DateTime? @db.DateTime(0)
+
+  @@index([BilledTo], map: "BilledTo")
+  @@index([Branch], map: "Branch")
+  @@index([CNDate], map: "CNDate")
+  @@index([Invoice], map: "Invoice")
+  @@index([InvoiceAmount], map: "InvoiceAmount")
+  @@index([InvoiceDate], map: "InvoiceDate")
+  @@index([InvoiceNoSoa], map: "InvoiceNoSoa")
+  @@index([InvoiceStatus], map: "InvoiceStatus")
+  @@index([Oid], map: "Oid")
+  @@index([TotalPayment], map: "TotalPayment")
+  @@index([WorkOrder], map: "WorkOrder")
+}
+
+model service_joborder {
+  WorkOrder                  String?   @db.Char(36)
+  Job                        String?   @db.Char(36)
+  CustomJobDescription       String?   @db.VarChar(100)
+  IsReturnJob                Int?      @db.TinyInt
+  SPKApproved                Int?      @db.TinyInt
+  FinalInspectionUnSolvedJob Int?      @db.TinyInt
+  FinalInspectionJobSolvedBy String?   @db.Char(36)
+  Technician                 String?   @db.Char(36)
+  Stall                      String?   @db.Char(36)
+  JobServiceRate             Float?
+  TechnicianJobRate          Float?
+  ServiceUnitPrice           Decimal?  @db.Decimal(19, 0)
+  WithholdingTax             String?   @db.Char(36)
+  VATCode                    String?   @db.Char(36)
+  Program                    String?   @db.Char(36)
+  DiscountType               String?   @db.Char(36)
+  ProgramPercentage          Float?
+  ProgramName                String?   @db.Char(36)
+  ProgramAmount              Decimal?  @db.Decimal(19, 0)
+  Partner                    String?   @db.Char(36)
+  DiscountForPartner         Float?
+  DiscountApproved           Int?      @db.TinyInt
+  Discount                   String?   @db.Char(36)
+  DiscountName               String?   @db.Char(36)
+  DiscountPercentage         Float?
+  Insurance                  String?   @db.Char(36)
+  DiscountForInsurer         Float?
+  InsuranceName              String?   @db.Char(36)
+  PartnerStatus              Int?
+  FinishTime                 DateTime? @db.DateTime(0)
+  EstimatedFinishTime        DateTime? @db.DateTime(0)
+  ServiceStartOn             DateTime? @db.DateTime(0)
+  ActualServiceRate          Float?
+  RequirePO                  Int?      @db.TinyInt
+  JobStatus                  Int?
+  IsActive                   Int?      @db.TinyInt
+  SubletInvoiceCreated       Int?      @db.TinyInt
+  Billed                     Int?      @db.TinyInt
+  ProgramBilled              Int?      @db.TinyInt
+  AllDay                     Int?      @db.TinyInt
+  EndOn                      DateTime? @db.DateTime(0)
+  Label                      Int?
+  Location                   String?   @db.VarChar(100)
+  Status                     Int?
+  Type                       Int?
+  OptimisticLockField        Int?
+  GCRecord                   Int?
+  TotalJobReDo               Int?
+  ServiceInvoice             String?   @db.Char(36)
+  IsJobReDo                  Int?      @db.TinyInt
+  JobReDoCount               Int?      @default(0) @db.TinyInt
+  JobOrderId                 String    @id @db.Char(36)
+  JobInsuranceAmount         Decimal?  @db.Decimal(19, 0)
+  ExcludeInLeadTimeCalc      Int?      @db.TinyInt
+  FieldAction                String    @db.Char(36)
+  RemarkRedo                 String?   @db.Text
+  FieldTemporaty             String?   @db.Text
+  InvJobDate                 DateTime? @db.DateTime(0)
+  Invoice                    String?   @db.Char(5)
+  IivJobDate                 DateTime? @db.DateTime(0)
+  InsuranceInvoice           String?   @db.Char(5)
+  PivJobDate                 DateTime? @db.DateTime(0)
+  ProgramInvoice             String?   @db.Char(5)
+  JobTAM                     String?   @db.VarChar(255)
+  created_at                 DateTime? @db.DateTime(0)
+  user_created               Int?
+  updated_at                 DateTime? @db.DateTime(0)
+  user_update                Int?
+  deleted_at                 DateTime? @db.DateTime(0)
+  SubletVendorPrice          Decimal?  @db.Decimal(10, 0)
+
+  @@index([Discount], map: "Discount")
+  @@index([FinalInspectionJobSolvedBy], map: "FinalInspectionJobSolvedBy")
+  @@index([GCRecord], map: "GCRecord")
+  @@index([Insurance], map: "Insurance")
+  @@index([Job], map: "Job")
+  @@index([Program], map: "Program")
+  @@index([ServiceInvoice], map: "ServiceInvoice")
+  @@index([Stall], map: "Stall")
+  @@index([Technician], map: "Technician")
+  @@index([VATCode], map: "VATCode")
+  @@index([WithholdingTax], map: "WithholdingTax")
+  @@index([WorkOrder], map: "WorkOrder")
+  @@index([deleted_at], map: "deleted_at")
+}
+
+model service_mobileservicetype {
+  Oid                 Int       @id @default(autoincrement()) @db.UnsignedInt
+  Description         String?   @db.VarChar(100)
+  OptimisticLockField Int?
+  GCRecord            Int?
+  created_at          DateTime? @db.DateTime(0)
+  user_created        Int?
+  updated_at          DateTime? @db.DateTime(0)
+  user_update         Int?
+  deleted_at          DateTime? @db.DateTime(0)
+
+  @@index([Oid], map: "Oid")
+}
+
+model service_program {
+  Oid                         String    @id @db.Char(36)
+  ProgramName                 String?   @db.VarChar(100)
+  ValidFrom                   DateTime? @db.Date
+  ValidThru                   DateTime? @db.Date
+  DiscountType                String?   @db.Char(36)
+  ProgramValueType            String?   @db.Char(36)
+  PercentageValue             Float?
+  AmountValue                 Decimal?  @db.Decimal(19, 0)
+  CreditLimit                 Decimal?  @db.Decimal(19, 0)
+  CreditAmount                Decimal?  @db.Decimal(19, 0)
+  PartnerStatus               Int?
+  ApplyToAllCustomer          Int?      @db.TinyInt
+  AttachedDocument            String?   @db.VarChar(100)
+  Partner                     String?   @db.Char(36)
+  DiscountForPartner          Float?
+  OverridePriceFromLandedCost Int?      @db.TinyInt
+  TermOfPayment               Int?
+  ReceivableAccount           String?   @db.Char(36)
+  Invoiceable                 Int?      @db.TinyInt
+  OptimisticLockField         Int?
+  ClaimToId                   Int?
+  ClaimTo                     String?   @db.VarChar(150)
+  ClaimCategoryId             Int?
+  ClaimCategory               String?   @db.VarChar(5)
+  GCRecord                    Int?
+  Branch                      String?   @db.VarChar(100)
+  created_at                  DateTime? @db.DateTime(0)
+  user_created                Int?
+  updated_at                  DateTime? @db.DateTime(0)
+  user_update                 Int?
+  deleted_at                  DateTime? @db.DateTime(0)
+
+  @@index([Oid], map: "Oid")
+  @@index([ProgramName], map: "ProgramName")
+}
+
+model service_repairtype {
+  RepairTypeId          BigInt    @id
+  RepairTypeDescription String?   @db.VarChar(100)
+  Branch                String?   @db.VarChar(100)
+  OptimisticLockField   Int?
+  GCRecord              Int?
+  created_at            DateTime? @db.DateTime(0)
+  user_created          Int?
+  updated_at            DateTime? @db.DateTime(0)
+  user_update           Int?
+  deleted_at            DateTime? @db.DateTime(0)
+
+  @@index([RepairTypeId], map: "RepairTypeId")
+}
+
+model service_workorder {
+  GrossJobSales                     Decimal?  @db.Decimal(19, 0)
+  GrossPartSales                    Decimal?  @db.Decimal(19, 0)
+  TotalPartDiscount                 Decimal?  @db.Decimal(19, 0)
+  TotalPartProgram                  Decimal?  @db.Decimal(19, 0)
+  TotalPartVAT                      Decimal?  @db.Decimal(19, 0)
+  TotalPartWithholdingTax           Decimal?  @db.Decimal(19, 0)
+  TotalJobDiscount                  Decimal?  @db.Decimal(19, 0)
+  TotalJobProgram                   Decimal?  @db.Decimal(19, 0)
+  TotalJobVAT                       Decimal?  @db.Decimal(19, 0)
+  TotalJobWithholdingTax            Decimal?  @db.Decimal(19, 0)
+  TotalJob                          Decimal?  @db.Decimal(19, 0)
+  TotalPart                         Decimal?  @db.Decimal(19, 0)
+  TotalInvoice                      Decimal   @default(0) @db.Decimal(19, 0)
+  TotalPayment                      Decimal?  @db.Decimal(19, 0)
+  DownPayment                       Decimal?  @db.Decimal(19, 0)
+  ContraCashAccount                 String?   @db.Char(36)
+  Stamp                             String?   @db.Char(36)
+  Tax                               Decimal?  @db.Decimal(19, 0)
+  ProformaAmount                    Decimal?  @db.Decimal(19, 0)
+  ProformaInvoice                   String?   @db.VarChar(100)
+  ProformaInvoiceDate               DateTime? @db.DateTime(0)
+  Oid                               String    @id @db.Char(36)
+  WorkOrderEstimationNo             String?   @db.VarChar(100)
+  WorkOrderEstimationDate           DateTime? @db.DateTime(0)
+  WorkOrderNo                       String?   @unique(map: "WorkOrderNo") @db.VarChar(100)
+  GatePassId                        String?   @db.VarChar(100)
+  WorkOrderDate                     DateTime? @db.DateTime(0)
+  CancelDate                        DateTime? @db.DateTime(0)
+  CancelReason                      String?   @db.VarChar(255)
+  BookingNo                         String?   @db.VarChar(100)
+  BookingStartOn                    DateTime? @db.DateTime(0)
+  BookingDate                       DateTime? @db.DateTime(0)
+  ProspectCategory                  String?   @db.Char(36)
+  CustomerType                      String?   @db.Char(36)
+  ServiceStartOn                    DateTime? @db.DateTime(0)
+  ServiceEndOn                      DateTime? @db.DateTime(0)
+  EstimatedFinishTime               DateTime? @db.DateTime(0)
+  BookingMethod                     Int?
+  Remark                            String?   @db.LongText
+  PaymentVia                        String?   @db.VarChar(100)
+  Branch                            String?   @db.VarChar(100)
+  SourceOfOrder                     String?   @db.VarChar(100)
+  IsClockOn                         Int?      @db.TinyInt
+  PaymentMethod                     Int?
+  BookingStatus                     Int?
+  WorkOrderStatus                   Int?
+  PRTStatus                         Boolean?
+  WorkOrderCompleated               Boolean   @default(true)
+  CustomerIsWaiting                 Int?      @db.TinyInt
+  EM                                Int?      @db.TinyInt
+  SSC                               Int?      @db.TinyInt
+  TWC                               Int?      @db.TinyInt
+  Insurance                         Int?      @db.TinyInt
+  TPSLine                           Int?      @db.TinyInt
+  ExternalCustomer                  String?   @db.VarChar(100)
+  ExtendedStatus                    Int?
+  Washing                           Int?      @db.TinyInt
+  CustomerDeliveryDateRequest       DateTime? @db.DateTime(0)
+  RepairSubType                     String?   @db.VarChar(36)
+  VehicleUnit                       String?   @db.Char(36)
+  CurrentStall                      String?   @db.Char(36)
+  ServiceAdvisor                    String?   @db.Char(36)
+  Foreman                           String?   @db.Char(36)
+  GroupHead                         String?   @db.Char(36)
+  Technician                        String?   @db.Char(100)
+  BookingStaff                      String?   @db.Char(36)
+  RepairType                        BigInt?
+  CustomerFollowUp                  String?   @db.Char(36)
+  CustomerFollowUpDate              DateTime? @db.DateTime(0)
+  CustomerFollowUpStatus            String?   @db.Char(36)
+  CustomerFollowUpRemark            String?   @db.VarChar(100)
+  HasBeenRemindedByMRA              Int?      @db.TinyInt
+  FieldAction                       String?   @db.Char(36)
+  CarWashQueue                      String?   @db.Char(36)
+  QueueNo                           Int?
+  FillRate                          Int?
+  ServiceInvoice                    String?   @db.Char(36)
+  InvoiceDate                       DateTime? @db.DateTime(0)
+  AllDay                            Int?      @db.TinyInt
+  EndOn                             DateTime? @db.DateTime(0)
+  Label                             Int?
+  Location                          String?   @db.VarChar(100)
+  StartOn                           DateTime? @db.DateTime(0)
+  Type                              Int?
+  Description                       String?   @db.VarChar(100)
+  Sequence                          BigInt?
+  CurrentMileageRecord              Int?
+  DocumentKey                       String?   @db.Char(36)
+  IsApproved                        Int?      @db.TinyInt
+  OptimisticLockField               Int?
+  GCRecord                          Int?
+  DamageCategory                    Int?
+  InsuranceWorkOrderId              String?   @db.VarChar(100)
+  ClaimId                           String?   @db.VarChar(100)
+  OR                                Decimal?  @db.Decimal(19, 0)
+  TotalPartInsurance                Decimal?  @db.Decimal(19, 0)
+  TotalJobInsurance                 Decimal?  @db.Decimal(19, 0)
+  CancelOrderReason                 String?   @db.Char(36)
+  MobileServiceType                 Int?
+  BPCurrentAction                   Int?
+  UnsuppliedPart                    Int?
+  RepairTypeSummary                 String?   @db.VarChar(100)
+  CPUS                              Int?      @db.TinyInt
+  OilChangeOnly                     Int?      @db.TinyInt
+  EstimatedDeliveryDate             DateTime? @db.DateTime(0)
+  DeliveryDate                      DateTime? @db.DateTime(0)
+  ExitPermit                        Boolean   @default(false)
+  IsPreDiagnose                     Boolean?
+  SupplyPartNo                      String?   @db.VarChar(100)
+  SupplyPartDate                    DateTime? @db.DateTime(0)
+  SPKReference                      String?   @db.VarChar(100)
+  PaidDate                          DateTime? @db.Date
+  WaitingApproval                   String?   @db.Char(36)
+  ApprovalTo                        String?   @db.Char(36)
+  StatusApproval                    Boolean   @default(false)
+  ReasonApproval                    String?   @db.VarChar(255)
+  created_at                        DateTime? @db.DateTime(0)
+  user_created                      Int?
+  updated_at                        DateTime? @db.DateTime(0)
+  user_update                       Int?
+  deleted_at                        DateTime? @db.DateTime(0)
+  CustomerFollowUpFIR               String?   @db.Char(1)
+  CustomerFollowUpFIRRemark         String?   @db.Text
+  CustomerFollowUpFIRDate           DateTime? @db.DateTime(0)
+  CustomerFollowUpFIRBy             Int?
+  CustomerFolloeUpFIRCounterMeasure String?   @db.Text
+  CustomerFolloeUpFIRStatus         Int?
+  CustomerFolloeUpFIREvidence       String?   @db.VarChar(225)
+  ReSchedule                        Boolean   @default(false)
+  ClaimNo                           String?   @db.VarChar(10)
+  StatusClaim                       String?   @db.VarChar(50)
+  Submit                            Int?      @db.TinyInt
+  ProcessNo                         String?   @db.VarChar(20)
+  Message                           String?   @db.Text
+  ErrorCode                         String?   @db.Char(5)
+
+  @@index([BookingStaff], map: "BookingStaff")
+  @@index([BookingStatus], map: "BookingStatus")
+  @@index([Branch], map: "Branch")
+  @@index([CancelOrderReason], map: "CancelOrderReason")
+  @@index([CarWashQueue], map: "CarWashQueue")
+  @@index([ContraCashAccount], map: "ContraCashAccount")
+  @@index([CurrentMileageRecord], map: "CurrentMileageRecord")
+  @@index([CurrentStall], map: "CurrentStall")
+  @@index([CustomerFollowUp], map: "CustomerFollowUp")
+  @@index([DamageCategory], map: "DamageCategory")
+  @@index([FieldAction], map: "FieldAction")
+  @@index([GCRecord], map: "GCRecord")
+  @@index([GroupHead], map: "GroupHead")
+  @@index([MobileServiceType], map: "MobileServiceType")
+  @@index([Oid], map: "Oid")
+  @@index([RepairSubType], map: "RepairSubType")
+  @@index([RepairType], map: "RepairType")
+  @@index([ServiceAdvisor], map: "ServiceAdvisor")
+  @@index([ServiceInvoice], map: "ServiceInvoice")
+  @@index([SourceOfOrder], map: "SourceOfOrder")
+  @@index([VehicleUnit], map: "VehicleUnit")
+  @@index([WorkOrderDate], map: "WorkOrderDate")
+  @@index([WorkOrderStatus], map: "WorkOrderStatus")
+  @@index([deleted_at], map: "deleted_at")
+}
+
+model service_workorderpart {
+  QuantitySupplied     Int?
+  QuantityReject       Int?
+  RejectDate           DateTime? @db.DateTime(0)
+  Oid                  String    @id @db.Char(36)
+  WorkOrder            String?   @db.Char(36)
+  Job                  String?   @db.Char(36)
+  Part                 String?   @db.Char(36)
+  Remark               String?   @db.VarChar(100)
+  Quantity             Int?
+  ServiceRate          Float?
+  UnitPrice            Decimal?  @db.Decimal(19, 0)
+  RetailPrice          Decimal?  @db.Decimal(19, 0)
+  Program              String?   @db.Char(36)
+  DiscountType         String?   @db.Char(36)
+  ProgramName          String?   @db.VarChar(100)
+  ProgramPercentage    Float?
+  ProgramAmount        Decimal?  @db.Decimal(19, 0)
+  Partner              String?   @db.Char(36)
+  DiscountForPartner   Float?
+  Discount             String?   @db.Char(36)
+  DiscountName         String?   @db.VarChar(100)
+  DiscountPercentage   Float?
+  VATCode              String?   @db.Char(36)
+  WithholdingTax       String?   @db.Char(36)
+  Billed               Int?      @db.TinyInt
+  ProgramBilled        Int?      @db.TinyInt
+  PartStatus           Int?
+  PartBooking          Int?
+  ETA                  DateTime? @db.DateTime(0)
+  Insurance            String?   @db.Char(36)
+  DiscountForInsurer   Float?
+  InsuranceName        String?   @db.VarChar(100)
+  InsuranceApproved    Int?      @db.TinyInt
+  PartInsuranceAmount  Decimal?  @db.Decimal(19, 0)
+  OrderProcessed       Int?      @db.TinyInt
+  PartIsPicked         Int?      @db.TinyInt
+  ServicePartBackOrder String?   @db.Char(36)
+  DiscountApproved     Int?      @db.TinyInt
+  ReservedDate         DateTime? @db.DateTime(0)
+  PickDate             DateTime? @db.DateTime(0)
+  SalesDate            DateTime? @db.DateTime(0)
+  ReturnDate           DateTime? @db.DateTime(0)
+  WaitingApproval      String?   @db.Char(30)
+  StatusApproval       Boolean?
+  SupplySlipDate       DateTime? @db.DateTime(0)
+  SupplySlipNo         String?   @db.VarChar(100)
+  OptimisticLockField  Int?
+  GCRecord             Int?
+  created_at           DateTime? @db.DateTime(0)
+  user_created         Int?
+  updated_at           DateTime? @db.DateTime(0)
+  user_update          Int?
+  deleted_at           DateTime? @db.DateTime(0)
+
+  @@index([Discount], map: "Discount")
+  @@index([Insurance], map: "Insurance")
+  @@index([Job], map: "Job")
+  @@index([Oid], map: "Oid")
+  @@index([Part], map: "Part")
+  @@index([Program], map: "Program")
+  @@index([ServicePartBackOrder], map: "ServicePartBackOrder")
+  @@index([VATCode], map: "VATCode")
+  @@index([WithholdingTax], map: "WithholdingTax")
+  @@index([WorkOrder], map: "WorkOrder")
+}
+
+model users {
+  id                          Int       @id @default(autoincrement()) @db.UnsignedMediumInt
+  ip_address                  String?   @db.VarChar(45)
+  username                    String    @db.VarChar(100)
+  password                    String    @db.VarChar(80)
+  email                       String    @db.VarChar(254)
+  activation_selector         String?   @db.VarChar(255)
+  activation_code             String?   @db.VarChar(255)
+  forgotten_password_selector String?   @db.VarChar(255)
+  forgotten_password_code     String?   @db.VarChar(255)
+  forgotten_password_time     Int?      @db.UnsignedInt
+  remember_selector           String?   @db.VarChar(255)
+  remember_code               String?   @db.VarChar(255)
+  created_on                  Int?      @db.UnsignedInt
+  last_login                  Int?      @db.UnsignedInt
+  active                      Int?      @db.UnsignedTinyInt
+  nik                         String?   @db.VarChar(30)
+  first_name                  String?   @db.VarChar(50)
+  last_name                   String?   @db.VarChar(50)
+  company                     String?   @db.VarChar(100)
+  phone                       String?   @db.VarChar(20)
+  NickName                    String?   @db.VarChar(100)
+  Initial                     String?   @db.VarChar(3)
+  PreTitle                    String?   @db.VarChar(100)
+  PostTitle                   String?   @db.VarChar(100)
+  ClothingSize                String?   @db.Char(36)
+  Height                      Float?
+  Weight                      Float?
+  PassportNo                  String?   @db.VarChar(100)
+  IssuedAt                    String?   @db.VarChar(100)
+  ExpiryDate                  DateTime? @db.DateTime(0)
+  IdentificationNo            String?   @db.VarChar(100)
+  IdentificationExpiryDate    DateTime? @db.DateTime(0)
+  TaxRegistrationNo           String?   @db.VarChar(100)
+  PlaceOfBirth                String?   @db.VarChar(100)
+  DateOfBirth                 DateTime? @db.Date
+  Gender                      String?   @db.Char(36)
+  Ethnic                      String?   @db.Char(36)
+  BloodType                   String?   @db.Char(36)
+  MaritalStatus               String?   @db.Char(36)
+  MaritalDate                 DateTime? @db.DateTime(0)
+  NoOfChildren                Int?      @db.SmallInt
+  StatusOnTax                 Int?
+  DrivingLicenseNo            String?   @db.VarChar(100)
+  DrivingLicenseType          String?   @db.Char(36)
+  Hobby                       String?   @db.VarChar(100)
+  Nationality                 String?   @db.Char(36)
+  Religion                    String?   @db.Char(36)
+  Address1                    String?   @db.Char(36)
+  PhoneNo1                    String?   @db.VarChar(100)
+  Address2                    String?   @db.Char(36)
+  PhoneNo2                    String?   @db.VarChar(100)
+  MobileNo1                   String?   @db.VarChar(100)
+  MobileNo2                   String?   @db.VarChar(100)
+  Email1                      String?   @db.VarChar(100)
+  Email2                      String?   @db.VarChar(100)
+  MotherName                  String?   @db.VarChar(50)
+  EmergencyContactName1       String?   @db.VarChar(100)
+  EmergencyContactRelation1   String?   @db.VarChar(100)
+  EmergencyAddress1           String?   @db.Char(36)
+  EmergencyPhoneNo1           String?   @db.VarChar(100)
+  EmergencyContactName2       String?   @db.VarChar(100)
+  EmergencyContactRelation2   String?   @db.VarChar(100)
+  EmergencyAddress2           String?   @db.Char(36)
+  EmergencyPhoneNo2           String?   @db.VarChar(100)
+  JoinedDate                  DateTime? @db.DateTime(0)
+  ConfirmationDate            DateTime? @db.DateTime(0)
+  EmploymentPeriod            Int?
+  ResignDate                  DateTime? @db.DateTime(0)
+  LastPromotionDate           DateTime? @db.DateTime(0)
+  SalaryPaymentMethod         String?   @db.Char(36)
+  TaxCalculationMode          Int?
+  OrganizationalUnit          String?   @db.VarChar(100)
+  Branch                      String?   @db.VarChar(100)
+  CounterNumber               Int?
+  WorkStatus                  Int?
+  Workgroup                   String?   @db.Char(36)
+  Grade                       String?   @db.Char(36)
+  NonEmployee                 Int?      @db.TinyInt
+  AutomaticOvertime           Int?      @db.TinyInt
+  PhoneExt                    String?   @db.VarChar(100)
+  PaymentPeriod               Int?
+  EmployeeEducation           String?   @db.Char(36)
+  Qualification               String?   @db.Char(36)
+  GPA                         String?   @db.VarChar(10)
+  BankAccountNo               String?   @db.VarChar(100)
+  AccountOwner                String?   @db.VarChar(100)
+  Photo                       String?   @db.VarChar(100)
+  PrivateKey                  String?   @db.Char(36)
+  IsActive                    Int?      @db.TinyInt
+  ChangePasswordOnFirstLogon  Int?      @db.TinyInt
+  StoredPassword              String?   @db.LongText
+  SalesForce                  String?   @db.Char(36)
+  Technician                  String?   @db.Char(36)
+  TechnicianRepairType        String?   @db.VarChar(100)
+  Sequence                    BigInt?
+  EnrollNo                    String?   @db.VarChar(100)
+  OptimisticLockField         Int?
+  GCRecord                    Int?
+  BankName                    String?   @db.Char(36)
+  PersonalGrade               String?   @db.VarChar(100)
+  Homebase                    String?   @db.VarChar(100)
+  TechnicianSkill             String?   @db.VarChar(11)
+  Picture                     String?   @db.VarChar(100)
+  group_id                    String?   @db.VarChar(100)
+  password_expires            DateTime? @db.DateTime(0)
+  ess_user_id                 String?   @db.VarChar(255)
+  created_at                  DateTime? @db.DateTime(0)
+  user_created                Int?
+  updated_at                  DateTime? @db.DateTime(0)
+  user_update                 Int?
+  deleted_at                  DateTime? @db.DateTime(0)
+
+  @@index([OrganizationalUnit], map: "OrganizationalUnit")
+  @@index([email], map: "email")
+  @@index([group_id], map: "group_id")
+  @@index([id], map: "id")
+  @@index([password], map: "password")
+  @@index([username], map: "username")
+}
+
+// Enums
+enum CustomerType {
+  RETAIL
+  FLEET
+}
+
+enum ReferenceType {
+  INTERNAL
+  EXTERNAL
+}

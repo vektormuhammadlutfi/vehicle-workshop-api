@@ -11,7 +11,7 @@ export async function getJobStatus(c: Context) {
     const { jobId } = c.req.param();
     const userId = c.get("userId");
 
-    const job = await prisma.csvJobs.findFirst({
+    const job = await prisma.csv_jobs.findFirst({
       where: {
         id: jobId,
         user_created: userId,
@@ -64,7 +64,7 @@ export async function downloadReport(c: Context) {
     const { jobId } = c.req.param();
     const userId = c.get("userId");
 
-    const job = await prisma.csvJobs.findFirst({
+    const job = await prisma.csv_jobs.findFirst({
       where: {
         id: jobId,
         user_created: userId,
@@ -130,13 +130,13 @@ export async function listJobs(c: Context) {
     const skip = (parseInt(page) - 1) * parseInt(limit);
 
     const [jobs, total] = await Promise.all([
-      prisma.csvJobs.findMany({
+      prisma.csv_jobs.findMany({
         where: { user_created: userId },
         orderBy: { created_at: "desc" },
         skip,
         take: parseInt(limit),
       }),
-      prisma.csvJobs.count({
+      prisma.csv_jobs.count({
         where: { user_created: userId },
       }),
     ]);

@@ -25,7 +25,7 @@ export async function generateWorkOrderReport(c: Context) {
     }
 
     // Create CSV job record
-    const csvJob = await prisma.csvJobs.create({
+    const csvJob = await prisma.csv_jobs.create({
       data: {
         id: crypto.randomUUID(),
         status: CsvJobStatus.PENDING,
@@ -67,7 +67,7 @@ async function processWorkOrderReport(
 ) {
   try {
     // Update status to processing
-    await prisma.csvJobs.update({
+    await prisma.csv_jobs.update({
       where: { id: jobId },
       data: { status: CsvJobStatus.PROCESSING },
     });
@@ -238,7 +238,7 @@ async function processWorkOrderReport(
     const fileSizeMB = (stats.size / 1024 / 1024).toFixed(2);
 
     // Update job record with success
-    await prisma.csvJobs.update({
+    await prisma.csv_jobs.update({
       where: { id: jobId },
       data: {
         status: CsvJobStatus.COMPLETED,
@@ -264,7 +264,7 @@ async function processWorkOrderReport(
     });
 
     // Update job record with error
-    await prisma.csvJobs.update({
+    await prisma.csv_jobs.update({
       where: { id: jobId },
       data: {
         status: CsvJobStatus.FAILED,
