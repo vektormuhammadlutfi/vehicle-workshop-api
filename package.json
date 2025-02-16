@@ -5,6 +5,13 @@
   "scripts": {
     "dev": "bun run --watch src/index.ts",
     "start": "bun run src/index.ts",
+    "db:migrate": "prisma migrate dev",
+    "db:migrate:deploy": "prisma migrate dev deploy",
+    "db:gen": "prisma generate",
+    "db:studio": "prisma studio",
+    "db:seed": "prisma db seed"
+  },
+  "prisma": {
     "seed": "bun run prisma/seed.ts"
   },
   "dependencies": {

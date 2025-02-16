@@ -1,4 +1,34 @@
-Berikut petunjuk penggunaan API Report:
+# Vehicle Workshop API
+
+## Getting Started
+
+Install dependencies:
+
+```sh
+bun install
+```
+
+Setup `.env` for local:
+
+```sh
+cp .env.example .env
+```
+
+Run the database container:
+
+```sh
+docker compose up -d
+```
+
+Migrate the database:
+
+```sh
+bun db:migrate
+```
+
+## Instructions
+
+Here are the instructions for using the Report API:
 
 1. **Generate Report (Memulai pembuatan report)**
 

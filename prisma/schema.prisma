@@ -9,17 +9,17 @@ datasource db {
 }
 
 model common_branch {
-  BranchId                                 String    @id @db.VarChar(100)
-  BranchName                               String?   @db.VarChar(100)
+  BranchId                                 String   @id @db.VarChar(100)
+  BranchName                               String?  @db.VarChar(100)
   ShortBranchName2                         Int?
   BranchType                               Int?
   LocationStatus                           Int?
-  BranchAddress                            String?   @db.Text
-  PhoneNo                                  String?   @db.VarChar(100)
-  PhoneNoSMSGateway                        String?   @db.VarChar(100)
-  Email                                    String?   @db.VarChar(100)
-  RootBranch                               String?   @db.VarChar(100)
-  IsSPLD                                   Int?      @db.TinyInt
+  BranchAddress                            String?  @db.Text
+  PhoneNo                                  String?  @db.VarChar(100)
+  PhoneNoSMSGateway                        String?  @db.VarChar(100)
+  Email                                    String?  @db.VarChar(100)
+  RootBranch                               String?  @db.VarChar(100)
+  IsSPLD                                   Int?     @db.TinyInt
   ReceptionLeadTime                        Float?
   ServiceLeadTime                          Float?
   PartPickingLeadTime                      Float?
@@ -35,49 +35,57 @@ model common_branch {
   DeadStock                                Int?
   DemandFrequency                          Int?
   DemandDuration                           Int?
-  StockPolicyPriceLimit                    Decimal?  @db.Decimal(19, 0)
+  StockPolicyPriceLimit                    Decimal? @db.Decimal(19, 0)
   ReturnDaysLimit                          Int?
-  ReturnPriceLimit                         Decimal?  @db.Decimal(19, 0)
+  ReturnPriceLimit                         Decimal? @db.Decimal(19, 0)
   BinningLimitDays                         Int?
-  Region                                   String?   @db.VarChar(100)
-  TaxCodeOnSales                           String?   @db.Char(36)
-  TaxCodeOnPurchase                        String?   @db.Char(36)
-  WithHoldingTaxCode                       String?   @db.Char(36)
-  IsRootBranch                             Int?      @db.TinyInt
-  DefaultPettyCashAccount                  String?   @db.Char(36)
-  CashierStartingAmount                    Decimal?  @db.Decimal(19, 0)
-  CashierBalanceClear                      Int?      @db.TinyInt
+  Region                                   String?  @db.VarChar(100)
+  TaxCodeOnSales                           String?  @db.Char(36)
+  TaxCodeOnPurchase                        String?  @db.Char(36)
+  WithHoldingTaxCode                       String?  @db.Char(36)
+  IsRootBranch                             Int?     @db.TinyInt
+  DefaultPettyCashAccount                  String?  @db.Char(36)
+  CashierStartingAmount                    Decimal? @db.Decimal(19, 0)
+  CashierBalanceClear                      Int?     @db.TinyInt
   DeadlinePeriodicService                  Int?
   MaximumReturnDownPayment                 Float?
-  ParentBranch                             String?   @db.VarChar(100)
+  ParentBranch                             String?  @db.VarChar(100)
   OptimisticLockField                      Int?
   GCRecord                                 Int?
-  DeliveryCode                             String?   @db.VarChar(5)
-  PartInTransitAccount                     String?   @db.Char(36)
-  ShortBranchNameDataTransfer              String?   @db.VarChar(4)
-  ShortBranchNameDataTransferOracle        String?   @db.VarChar(4)
-  ShortBranchName                          String?   @db.VarChar(4)
-  ToyotaBranchCode                         String?   @db.VarChar(100)
-  ToyotaBranchCodeAFI                      String?   @db.VarChar(100)
-  ToyotaAuthorized                         Int?      @db.TinyInt
-  ParentToyotaBranchCode                   String?   @db.VarChar(100)
-  PrincipalAuthorized                      Int?      @db.TinyInt
-  PrincipalBranchCode                      String?   @db.VarChar(100)
-  ParentPrincipalBranchCode                String?   @db.VarChar(100)
-  DefaultLocation                          String?   @db.Char(36)
-  DefaultIntransitLocation                 String?   @db.Char(36)
+  DeliveryCode                             String?  @db.VarChar(5)
+  PartInTransitAccount                     String?  @db.Char(36)
+  ShortBranchNameDataTransfer              String?  @db.VarChar(4)
+  ShortBranchNameDataTransferOracle        String?  @db.VarChar(4)
+  ShortBranchName                          String?  @db.VarChar(4)
+  ToyotaBranchCode                         String?  @db.VarChar(100)
+  ToyotaBranchCodeAFI                      String?  @db.VarChar(100)
+  ToyotaAuthorized                         Int?     @db.TinyInt
+  ParentToyotaBranchCode                   String?  @db.VarChar(100)
+  PrincipalAuthorized                      Int?     @db.TinyInt
+  PrincipalBranchCode                      String?  @db.VarChar(100)
+  ParentPrincipalBranchCode                String?  @db.VarChar(100)
+  DefaultLocation                          String?  @db.Char(36)
+  DefaultIntransitLocation                 String?  @db.Char(36)
   OrganizationalUnitTypeForTransferRequest Int?
-  Province                                 String?   @db.VarChar(50)
-  City                                     String?   @db.VarChar(50)
+  Province                                 String?  @db.VarChar(50)
+  City                                     String?  @db.VarChar(50)
   MatriksDR                                Int?
-  OutlateCode                              String?   @db.VarChar(10)
-  Counters                                 Int?      @db.TinyInt
-  InitialBranch                            String?   @db.Char(4)
-  created_at                               DateTime? @db.DateTime(0)
-  user_created                             Int?
-  updated_at                               DateTime? @db.DateTime(0)
-  user_update                              Int?
-  deleted_at                               DateTime? @db.DateTime(0)
+  OutlateCode                              String?  @db.VarChar(10)
+  Counters                                 Int?     @db.TinyInt
+  InitialBranch                            String?  @db.Char(4)
+
+  created_at   DateTime? @db.DateTime(0)
+  user_created Int?
+  updated_at   DateTime? @db.DateTime(0)
+  user_update  Int?
+  deleted_at   DateTime? @db.DateTime(0)
+
+  // createdAt       DateTime? @db.DateTime(0)
+  // createdByUserId Int?
+  // updatedAt       DateTime? @db.DateTime(0)
+  // updatedByUserId Int?
+  // deletedAt       DateTime? @db.DateTime(0)
+  // deletedByUserId Int?
 
   @@index([BranchId], map: "BranchId")
   @@index([DefaultIntransitLocation], map: "DefaultIntransitLocation")

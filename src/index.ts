@@ -29,6 +29,10 @@ app.use("*", async (c, next) => {
 });
 
 // Report endpoints
+app.get("/", (c) => c.json({ message: "Vehicle Workshop API" }));
+
+// TODO: Load Work Orders endpoint
+
 app.post("/api/reports/work-orders", reportService.generateWorkOrderReport);
 app.get("/api/jobs/:jobId/status", jobsService.getJobStatus);
 app.get("/api/jobs/:jobId/download", jobsService.downloadReport);

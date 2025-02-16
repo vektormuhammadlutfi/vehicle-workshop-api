@@ -27,7 +27,7 @@ async function main() {
       Array(5)
         .fill(null)
         .map(async (_, index) => {
-          return await prisma.common_branch.create({
+          const newCommonBranch = await prisma.common_branch.create({
             data: {
               BranchId: `BR${String(index + 1).padStart(3, "0")}`,
               BranchName: `Branch ${index + 1}`,
@@ -38,6 +38,8 @@ async function main() {
               Email: `branch${index + 1}@example.com`,
             },
           });
+          console.info("✅ Branch created:", newCommonBranch.BranchName);
+          return newCommonBranch;
         })
     );
 
